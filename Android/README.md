@@ -155,6 +155,11 @@ gradlew.bat lint
 - Domain models and use-case-oriented code is organized under `com/taskflow/app/domain`.
 - Use a configurable API URL so the app can be switched between emulator, physical-device, and production environments.
 
+## Screen Structure
+
+Task List → Task Detail → Back to Task List  
+Task List → Add Task → Back to Task List
+
 ## Mobile-Specific Decisions
 
 ### Decision 1 — Optimistic vs. Pessimistic Updates
@@ -182,6 +187,13 @@ If `dueDate` is missing, null, or contains an invalid date string, the compariso
 - Completed tasks with past due dates are not displayed as overdue.
 - Incomplete tasks with past due dates are displayed as overdue.
 - Tasks due today are not considered overdue.
+
+
+## AI Usage
+
+ChatGPT was used as an AI assistance tool during development to help design the MVVM architecture, generate initial Kotlin/Jetpack Compose code, implement Hilt dependency injection, Flow-based state management, Navigation Compose, Retrofit API integration, and the Node.js/Express backend.
+
+AI assistance was also used to understand implementation decisions, handle edge cases, and prepare README documentation. The generated code was reviewed and adapted to the assessment requirements. Manual verification, testing, debugging, and final implementation review were performed by the developer.
 
 ## Contributing
 
