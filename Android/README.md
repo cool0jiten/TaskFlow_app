@@ -155,6 +155,34 @@ gradlew.bat lint
 - Domain models and use-case-oriented code is organized under `com/taskflow/app/domain`.
 - Use a configurable API URL so the app can be switched between emulator, physical-device, and production environments.
 
+## Mobile-Specific Decisions
+
+### Decision 1 — Optimistic vs. Pessimistic Updates
+
+**Chosen approach: Optimistic updates.** When a user marks a task as complete or incomplete, the UI updates immediately for a responsive experience, and if the API request fails, the previous state is restored with an error message.
+
+### Decision 2 — Filter Persistence
+
+**Chosen approach: Preserve filters.** The selected assignee and completion-status filters remain applied when navigating from the Task List to Task Detail and back, so users can continue where they left off without reselecting filters.
+
+## Debugging Question — `isTaskOverdue()`
+
+### Bug 1 — Timezone Handling
+
+`new Date().toISOString()` converts the current date and time to UTC before extracting the date. Depending on the user's local timezone, the UTC date can differ from the local date, which may incorrectly mark a task as overdue or not overdue.
+
+### Bug 2 — Silent Failure When Data Is Missing or Invalid
+
+If `dueDate` is missing, null, or contains an invalid date string, the comparison may silently return `false` instead of identifying invalid data. This can hide data-quality issues and make debugging difficult.
+
+### Android Implementation — Overdue Handling
+
+- Tasks without a due date (`null`) are treated as not overdue.
+- Invalid due-date strings are safely handled and treated as not overdue.
+- Completed tasks with past due dates are not displayed as overdue.
+- Incomplete tasks with past due dates are displayed as overdue.
+- Tasks due today are not considered overdue.
+
 ## Contributing
 
 1. Fork the repository.
